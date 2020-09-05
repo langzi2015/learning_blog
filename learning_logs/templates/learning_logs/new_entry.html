@@ -1,0 +1,18 @@
+{% extends "learning_logs/base.html" %}
+{% load bootstrap4 %}
+
+{% block header %}
+    <h2>添加笔记</h2>
+{% endblock header %}
+
+{% block content %}
+    <p><a href="{% url 'learning_logs:topic' topic.id%}">{{ topic }}</a></p>
+    <p>添加新的学习笔记：</p>
+    <form action="{% url 'learning_logs:new_entry' topic.id%}" class="form" method="post" autocomplete="off">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button name="submit" class="btn btn-primary">添加笔记</button>
+        {% endbuttons %}
+    </form>
+{% endblock content %}

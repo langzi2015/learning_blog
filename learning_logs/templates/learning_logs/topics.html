@@ -1,0 +1,20 @@
+{% extends "learning_logs/base.html" %}
+
+{% block header %}
+    <h2>主题</h2>
+{% endblock header %}
+
+{% block content %}
+    <ul class="list-group list-group-flush" style="margin-left: -15px">
+    {%for topic in topics%}
+        <li class="list-group-item">
+            <h3 style="float: left"><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></h3>
+            <p style="float: right"><a href="{% url 'learning_logs:edit_topic' topic.id %}">编辑主题</a></p>
+        </li>
+        {% empty %}
+        <li class="list-group-item">暂时没有学习主题。</li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'learning_logs:new_topic' %}" style="margin: 10px 0"
+       class="btn btn-primary btn-lg active" role="button" aria-pressed="true">添加主题</a>
+{% endblock content %}
