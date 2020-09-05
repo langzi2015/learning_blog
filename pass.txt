@@ -1,9 +1,0 @@
-user:langzi
-pass:19961006
-管理员
-
-user:yiran
-pass:最常用
-
-user：空巢青年
-pass：12345678lrb
