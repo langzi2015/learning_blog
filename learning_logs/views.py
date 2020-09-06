@@ -66,6 +66,18 @@ def edit_topic(request, topic_id):
 
 
 @login_required
+def delete_topic(request, topic_id):
+    """删除主题"""
+    topic=Topic.objects.get(id=topic_id)
+    if request.user != topic.owner:
+        return Http404
+    if request.method == 'POST':
+        topic.delete()
+    return HttpResponseRedirect(reverse('learning_logs:topics'))
+
+
+
+@login_required
 def new_entry(request, topic_id):
     """为某一个主题添加条目"""
     topic = Topic.objects.get(id=topic_id)
@@ -100,4 +112,16 @@ def edit_entry(request, entry_id):
             return HttpResponseRedirect(reverse('learning_logs:topic', args=[topic.id]))
     context = {'topic': topic, 'entry': entry, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+
+@login_required
+def delete_entry(request, entry_id):
+    """删除条目"""
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic
+    if request.user != topic.owner:
+        return Http404
+    if request.method == 'POST':
+        entry.delete()
+    return HttpResponseRedirect(reverse('learning_logs:topic', args=[topic.id]))
 

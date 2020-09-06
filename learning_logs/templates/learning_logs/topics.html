@@ -1,4 +1,5 @@
 {% extends "learning_logs/base.html" %}
+{% load bootstrap4 %}
 
 {% block header %}
     <h2>主题</h2>
@@ -9,7 +10,29 @@
     {%for topic in topics%}
         <li class="list-group-item">
             <h3 style="float: left"><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></h3>
-            <p style="float: right"><a href="{% url 'learning_logs:edit_topic' topic.id %}">编辑主题</a></p>
+            <p style="float: right"><a onclick="delete_topic_query({ title:'{{ topic.text }}',id:'{{ topic.id }}' })" href="#">删除</a></p>
+            <form style="display:none;" id="topic_delete_{{ topic.id }}"
+                  action="{% url 'learning_logs:delete_topic' topic.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit"></button>
+            </form>
+            <script>
+                function delete_topic_query(topic) {
+                    layer.open({
+                        title: topic.title,
+                        content: "确认删除该主题吗？",
+                        btn: ['确认', '取消'],
+                        yes: function(index) {
+                            $('form#topic_delete_'+topic.id+' button').click();
+                            layer.close(index);
+                        },
+                        btn2:function (index) {
+                            layer.close(index);
+                        }
+                    })
+                }
+            </script>
+            <p style="float: right;margin-right: 20px;"><a href="{% url 'learning_logs:edit_topic' topic.id %}">编辑</a></p>
         </li>
         {% empty %}
         <li class="list-group-item">暂时没有学习主题。</li>
@@ -18,3 +41,4 @@
     <a href="{% url 'learning_logs:new_topic' %}" style="margin: 10px 0"
        class="btn btn-primary btn-lg active" role="button" aria-pressed="true">添加主题</a>
 {% endblock content %}
+
