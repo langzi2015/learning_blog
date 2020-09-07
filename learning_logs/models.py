@@ -16,11 +16,12 @@ class Topic(models.Model):
 class Entry(models.Model):
     """主题下的不同条目"""
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    text = models.TextField()
+    title = models.CharField(max_length=200)
+    text = models.TextField(default='', blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural = 'entries'
 
     def __str__(self):
-        return self.text[:50] + '...' if len(self.text) > 50 else self.text
+        return self.title+'\n'+self.text[:50] + '...' if len(self.text) > 50 else self.text
