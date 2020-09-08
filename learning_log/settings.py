@@ -25,7 +25,7 @@ SECRET_KEY = '3+8r+u6#$#29=l%_!6&h10s=d*akb02pru0^7m=)84^l0_4f+#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '123.57.227.41', 'kongchaoqingnian.cn']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '123.57.227.41', 'kongchaoqingnian.cn','www.kongchaoqingnian.cn','log.kongchaoqingnian.cn']
 
 # Application definition
 
@@ -120,10 +120,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-STATICFILES_DIRS = [
-    ("js", os.path.join(STATIC_ROOT, "js"))
-]
+#STATIC_ROOT = '/home/projects/learning_log/my_static'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # my_settings
 LOGIN_URL = '/users/login/'
+
+X_FRAME_OPTIONS = 'ALLOWALL'
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
